@@ -7,22 +7,27 @@ const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
 
+// Routes
+const ticketRoutes = require('./src/routes/ticketRoutes');
+const userRoutes = require('./src/routes/userRoutes');
+
 app.use(express.json());
 
-const ticketRoutes = require('./src/routes/ticketRoutes');
-app.use('/api', ticketRoutes);
-
-
-app.get('/', (req,res) => {
+// Root route
+app.get('/', (req, res) => {
     res.send('API Running');
 });
 
+// Mount routes
+app.use('/api', ticketRoutes);
+app.use('/api/users', userRoutes);
+
+// Start server
 app.listen(3000, () => {
     console.log("Server running on port 3000");
 });
 
-if (process.env.MONGO_URI) {
-    mongoose.connect(process.env.MONGO_URI)
-        .then(() => console.log('Data Base Connected'))
-        .catch(err => console.log(err));
-}
+// Connect DB
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log('Database Connected'))
+    .catch(err => console.log(err));
