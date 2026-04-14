@@ -1,5 +1,6 @@
 const paymentModel = require('../models/payment');
 const ticketModel = require('../models/ticket');
+const paymentRepository = require('../repositories/paymentRepository');
 
 // membuat pembayaran baru
 async function createPayment(req, res, next) {
@@ -24,12 +25,9 @@ async function createPayment(req, res, next) {
     }
 }
 // mendapatkan semua pembayaran
-async function getPayments(req, res, next) {
+async function getPayments(res, next) {
     try {
-        const payments = await paymentModel
-            .find()
-            .populate('ticketId')
-            .populate('userId');
+        const payments = await paymentRepository.findAll();
 
         return res.json(payments);
     } catch (err) {
