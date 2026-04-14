@@ -24,7 +24,7 @@ app.use(express.json());
 
 // Root route
 app.get('/', (req, res) => {
-    res.send('API Running');
+    res.send('TIARA BACKEND NYALA');
 });
 
 // Mount routes
