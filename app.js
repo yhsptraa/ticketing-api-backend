@@ -10,6 +10,7 @@ const app = express();
 // Routes
 const ticketRoutes = require('./src/routes/ticketRoutes');
 const userRoutes = require('./src/routes/userRoutes');
+const authRoutes = require('./src/routes/authRoutes');
 const paymentRoutes = require('./src/routes/paymentRoutes');
 
 const port = process.env.PORT || 3000;
@@ -29,6 +30,7 @@ app.get('/', (req, res) => {
 
 // Routes
 app.use('/api', ticketRoutes);        // → /api/tickets
+app.use('/api/auth', authRoutes);     // → /api/auth
 app.use('/api/users', userRoutes);    // → /api/users
 app.use('/api/payments', paymentRoutes); // → /api/payments
 
