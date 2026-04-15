@@ -9,15 +9,12 @@ async function create(data) {
         throw error;
     }
 }
-
 async function findAll() {
     return Payment.find().populate('ticketId').populate('userId');
 }
-
 async function findById(id) {
     return Payment.findById(id).populate('ticketId').populate('userId');
 }
-
 module.exports = {
     create,
     findAll,
