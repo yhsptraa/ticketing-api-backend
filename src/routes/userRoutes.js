@@ -3,22 +3,22 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 const auth = require('../middleware/auth');
 
-/**
- * Register
- * POST /api/users/register
- */
+// POST /api/users/register
 router.post('/register', userController.register);
 
-/**
- * Login
- * POST /api/users/login
- */
+// POST /api/users/login
 router.post('/login', userController.login);
 
-/**
- * Get current logged in user
- * GET /api/users/me
- */
+// GET /api/users/me
 router.get('/me', auth, userController.getMe);
+
+// GET /api/users
+router.get('/', auth, userController.getAllUsers);
+
+// PUT /api/users/:id
+router.put('/:id', auth, userController.updateUser);
+
+// DELETE /api/users/:id
+router.delete('/:id', auth, userController.deleteUser);
 
 module.exports = router;
