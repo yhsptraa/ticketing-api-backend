@@ -17,7 +17,7 @@ async function register(req, res, next) {
 
         const user = await authService.createUser(name, email, password);
         if (!user) {
-            throw errorResponder(errorTypes.INTERNAL_SERVER_ERROR, 'Failed to create user');
+            throw errorResponder(errorTypes.SERVER, 'Failed to create user');
         }
 
         return res.status(201).json({
