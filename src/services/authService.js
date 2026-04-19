@@ -25,26 +25,30 @@ async function createUser(name, email, password) {
 async function login(email, password) {
     try {
         const user = await authRepository.findByEmail(email);
-        if (!user) return null;
 
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) return null;
+        // Always run bcrypt even if user not found to prevent timing attacks
+        const userPassword = user ? user.password : '<RANDOM_FILLER>';
+        const isMatch = await bcrypt.compare(password, userPassword);
 
-        const token = jwt.sign(
-            { id: user._id, role: user.role },
-            process.env.JWT_SECRET || 'SECRET_KEY',
-            { expiresIn: '1d' }
-        );
+        if (user && isMatch) {
+            const token = jwt.sign(
+                { id: user._id },
+                process.env.JWT_SECRET || 'SECRET_KEY',
+                { expiresIn: '1d' }
+            );
 
-        return {
-            token,
-            user: {
-                id: user._id,
-                name: user.name,
-                email: user.email,
-                role: user.role
-            }
-        };
+            return {
+                token,
+                user: {
+                    id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    role: user.role
+                }
+            };
+        }
+
+        return null;
     } catch (err) {
         return null;
     }

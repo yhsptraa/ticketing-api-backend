@@ -19,10 +19,12 @@ async function getMe(req, res, next) {
 }
 
 // Melihat semua user
-async function getAllUsers(_req, res, next) {
+async function getAllUsers(req, res, next) {
     try {
-        const users = await userService.getAllUsers();
-        return res.json(users);
+        const page = Math.max(1, parseInt(req.query.page) || 1);
+        const limit = Math.min(100, Math.max(1, parseInt(req.query.limit) || 10));
+        const result = await userService.getAllUsers({ page, limit });
+        return res.json(result);
     } catch (err) {
         return next(err);
     }

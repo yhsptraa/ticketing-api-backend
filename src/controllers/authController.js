@@ -1,4 +1,5 @@
 const authService = require('../services/authService');
+const { errorResponder, errorTypes } = require('../core/errors');
 
 // Register user baru
 async function register(req, res, next) {
@@ -6,17 +7,17 @@ async function register(req, res, next) {
         const { name, email, password, password_confirm } = req.body;
 
         if (password !== password_confirm) {
-            return res.status(400).json({ error: 'Password confirmation mismatched' });
+            throw errorResponder(errorTypes.VALIDATION, 'Password confirmation mismatched');
         }
 
         const emailIsRegistered = await authService.emailIsRegistered(email);
         if (emailIsRegistered) {
-            return res.status(400).json({ error: 'Email already registered' });
+            throw errorResponder(errorTypes.EMAIL_ALREADY_TAKEN, 'Email already registered');
         }
 
         const user = await authService.createUser(name, email, password);
         if (!user) {
-            return res.status(422).json({ error: 'Failed to create user' });
+            throw errorResponder(errorTypes.INTERNAL_SERVER_ERROR, 'Failed to create user');
         }
 
         return res.status(201).json({
@@ -36,12 +37,12 @@ async function login(req, res, next) {
         const { email, password } = req.body;
 
         if (!email || !password) {
-            return res.status(400).json({ error: 'Email and password are required' });
+            throw errorResponder(errorTypes.VALIDATION, 'Email and password are required');
         }
 
         const result = await authService.login(email, password);
         if (!result) {
-            return res.status(400).json({ error: 'Invalid email or password' });
+            throw errorResponder(errorTypes.INVALID_CREDENTIALS, 'Wrong email or password');
         }
 
         return res.status(200).json({

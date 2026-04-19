@@ -4,8 +4,10 @@ async function getUserById(id) {
     return await userRepository.findById(id);
 }
 
-async function getAllUsers() {
-    return await userRepository.findAll();
+async function getAllUsers({ page = 1, limit = 10 } = {}) {
+    const skip = (page - 1) * limit;
+    const { data, total } = await userRepository.findAll({ skip, limit });
+    return { data, total, page, limit, totalPages: Math.ceil(total / limit) };
 }
 
 async function updateUser(id, data) {
