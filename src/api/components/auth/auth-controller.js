@@ -1,5 +1,5 @@
-const authService = require('../services/authService');
-const { errorResponder, errorTypes } = require('../core/errors');
+const authService = require('./auth-service');
+const { errorResponder, errorTypes } = require('../../../core/errors');
 
 // Register user baru
 async function register(req, res, next) {

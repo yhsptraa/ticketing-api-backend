@@ -1,4 +1,4 @@
-const userService = require('../services/userService');
+const userService = require('./users-service');
 
 // Melihat profil user yang sedang login
 async function getMe(req, res, next) {

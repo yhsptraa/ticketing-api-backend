@@ -1,5 +1,5 @@
-const paymentRepository = require('../repositories/paymentRepository');
-const ticketModel = require('../models/ticket');
+const paymentRepository = require('./payments-repository');
+const ticketModel = require('../../../models/ticket');
 
 async function createPayment(ticketId, userId) {
     try {

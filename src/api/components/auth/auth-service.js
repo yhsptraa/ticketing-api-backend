@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const authRepository = require('../repositories/authRepository');
+const authRepository = require('./auth-repository');
 
 async function emailIsRegistered(email) {
     const user = await authRepository.findByEmail(email);

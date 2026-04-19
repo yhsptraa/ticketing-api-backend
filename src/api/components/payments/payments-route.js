@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const paymentController = require('../controllers/paymentController');
+const paymentController = require('./payments-controller');
 // membuat pembayaran baru
 // POST /api/payments
 router.post('/', paymentController.createPayment);
@@ -17,4 +17,3 @@ router.put('/:id/status', paymentController.updatePaymentStatus);
 // DELETE /api/payments/:id
 router.delete('/:id', paymentController.deletePayment);
 module.exports = router;
-

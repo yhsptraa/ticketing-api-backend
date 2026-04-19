@@ -1,4 +1,4 @@
-const ticketRepository = require('../repositories/ticketRepository');
+const ticketRepository = require('./tickets-repository');
 
 const getAllTickets = async () => {
   return await ticketRepository.getAllTickets();

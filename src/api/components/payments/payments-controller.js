@@ -1,4 +1,4 @@
-const paymentService = require('../services/paymentService');
+const paymentService = require('./payments-service');
 
 // membuat pembayaran baru
 async function createPayment(req, res, next) {

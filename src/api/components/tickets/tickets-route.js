@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const ticketController = require('../controllers/ticketController');
+const ticketController = require('./tickets-controller');
 
 router.get('/tickets', ticketController.getAllTickets);
 router.get('/tickets/:id', ticketController.getTicketById);

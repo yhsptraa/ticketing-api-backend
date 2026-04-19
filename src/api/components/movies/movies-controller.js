@@ -1,10 +1,10 @@
-const Movie =  require('../models/movie');
+const Movie =  require('../../../models/movie');
 
 // POST: Menambah Film Baru
 async function createMovie(req, res) {
     try {
         const {title, synopsis, duration_minutes, release_date, status} = req.body;
-        
+
         const newMovie = new Movie({
             title,
             synopsis,
@@ -31,3 +31,5 @@ async function get(req, res) {
         res.status(500).json(error.message);
     }
 }
+
+module.exports = { createMovie, get };

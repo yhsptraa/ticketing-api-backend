@@ -7,11 +7,7 @@ const pinoHTTP = require('pino-http');
 const config = require('./config');
 const logger = require('./logger')('app');
 const { errorResponder, errorTypes } = require('./errors');
-
-const ticketRoutes = require('../routes/ticketRoutes');
-const userRoutes = require('../routes/userRoutes');
-const authRoutes = require('../routes/authRoutes');
-const paymentRoutes = require('../routes/paymentRoutes');
+const routes = require('../api/routes');
 
 const app = express();
 
@@ -32,10 +28,7 @@ mongoose
 app.get('/', (req, res) => res.send('BACKEND TICKET BOOKING API'));
 
 // API Routes
-app.use(`${config.api.prefix}/auth`, authRoutes);
-app.use(`${config.api.prefix}/users`, userRoutes);
-app.use(`${config.api.prefix}`, ticketRoutes);
-app.use(`${config.api.prefix}/payments`, paymentRoutes);
+app.use(config.api.prefix, routes());
 
 // Handle 404
 app.use((req, res, next) =>
