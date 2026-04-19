@@ -1,35 +1,40 @@
-const Movie =  require('../../../models/movie');
+const movieServices  =  require('./movies-service');
 
-// POST: Menambah Film Baru
-async function createMovie(req, res) {
+async function getAllMovies(req, res) {
     try {
-        const {title, synopsis, duration_minutes, release_date, status} = req.body;
-
-        const newMovie = new Movie({
-            title,
-            synopsis,
-            duration_minutes,
-            release_date,
-            status
+        const movies = await movieServices.getAllMovies();
+        res.status(200).json({
+            success: true,
+            count: movies.length,
+            data: movies
         });
-
-        const savedMovie = await newMovie.save();
-
-        res.status(201).json(savedMovie);
     } catch (error) {
-        res.status(400).json(error.message);
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
     }
 }
 
-// GET: Ambil seluruh Film
-async function get(req, res) {
+async function addMovie(req, res) {
     try {
-        const movies = await Movie.find().sort({createAt: -1});
+        const newMovie = await movieServices.addMovie(req.body);
 
-        res.status(200).json(movies);
+        res.status(201).json({
+            success: true,
+            data: newMovie
+        });
     } catch (error) {
-        res.status(500).json(error.message);
+        res.status(400).json({
+            sucess: false,
+            message: error.message,
+        });
     }
 }
 
-module.exports = { createMovie, get };
+
+
+module.exports = { 
+    getAllMovies, 
+    addMovie
+};

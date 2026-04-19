@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const moviesController = require('./movies-controller');
 
-// POST/api/movie
-router.post('/', moviesController.createMovie)
+// POST /api/movies
+router.post('/', moviesController.addMovie)
 
-// GET/api/movie
-router.get('/', moviesController.get)
+// GET /api/movies
+router.get('/', moviesController.getAllMovies)
 
 module.exports = router;

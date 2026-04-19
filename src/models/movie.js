@@ -1,11 +1,24 @@
 const mongoose = require('mongoose');
 
 const movieSchema = new mongoose.Schema({
-    title: String,
-    synopsis: String,
-    duration_minutes:Number,
-    release_date: Date,
-    Status: String
+    title: {
+        type: String,
+        required: true,
+        index: true
+    },
+    durationMinutes: {
+        type: Number,
+        required: true,
+        min: 80
+    },
+    releaseDate:{
+        type: Date
+    },
+    status: {
+        type: String,
+        enum: ['ongoing', 'released', 'upcoming'],
+        default: 'Ongoing'
+    },
 },{
     timestamps:true
 });
