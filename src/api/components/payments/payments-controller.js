@@ -38,6 +38,9 @@ async function getPaymentById(req, res, next) {
 async function updatePaymentStatus(req, res, next) {
     try {
         const { status } = req.body;
+        if (!['pending', 'success', 'failed'].includes(status)) {
+            return res.status(400).json({ error: 'Invalid status' });
+        }
         const payment = await paymentService.updatePaymentStatus(req.params.id, status);
         if (!payment) {
             return res.status(404).json({ error: 'Payment not found' });
