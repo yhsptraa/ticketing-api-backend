@@ -64,6 +64,11 @@ const errorTypes = {
         status: 409,
         code: 'DB_DUPLICATE_CONFLICT_ERROR',
     },
+    TOO_MANY_REQUESTS: {
+        description: 'Too many requests',
+        status: 429,
+        code: 'TOO_MANY_REQUESTS_ERROR',
+    },
 };
 
 const errorResponder = (errorType, message = '') => {
