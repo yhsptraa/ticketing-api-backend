@@ -3,13 +3,16 @@ const paymentService = require('./payments-service');
 // membuat pembayaran baru
 async function createPayment(req, res, next) {
     try {
-        const { ticketId, userId} = req.body;
-        const payment = await paymentService.createPayment(ticketId, userId);
-        if (!payment) {
-            return res.status(422).json({ error: 'Payment not found' });
-        }
+        const { ticketIds, userId } = req.body;
+        const payment = await paymentService.createPayment(ticketIds, userId);
         return res.status(201).json(payment);
     } catch (err) {
+        if (err.message === 'Some of the tickets were not found.') {
+            return res.status(404).json({ error: err.message });
+        }
+        if (err.message === 'Some of the tickets have already been paid for.') {
+            return res.status(400).json({ error: err.message });
+        }
         return next(err);
     }
 }
@@ -38,7 +41,7 @@ async function getPaymentById(req, res, next) {
 async function updatePaymentStatus(req, res, next) {
     try {
         const { status } = req.body;
-        if (!['pending', 'success', 'failed'].includes(status)) {
+        if (!['pending', 'paid', 'failed'].includes(status)) {
             return res.status(400).json({ error: 'Invalid status' });
         }
         const payment = await paymentService.updatePaymentStatus(req.params.id, status);

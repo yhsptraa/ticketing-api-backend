@@ -10,10 +10,10 @@ async function create(data) {
     }
 }
 async function findAll() {
-    return Payment.find().populate('ticketId').populate('userId');
+    return Payment.find().populate('ticketIds').populate('userId');
 }
 async function findById(id) {
-    return Payment.findById(id).populate('ticketId').populate('userId');
+    return Payment.findById(id).populate('ticketIds').populate('userId');
 }
 module.exports = {
     create,

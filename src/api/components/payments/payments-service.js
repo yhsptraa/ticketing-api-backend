@@ -1,20 +1,28 @@
 const paymentRepository = require('./payments-repository');
 const ticketModel = require('../../../models/ticket');
 
-async function createPayment(ticketId, userId) {
-    try {
-        const ticket = await ticketModel.findById(ticketId);
-        if (!ticket) return null;
+async function createPayment(ticketIds, userId) {
+    const tickets = await ticketModel.find({ _id: { $in: ticketIds } });
 
-        const payment = await paymentRepository.create({
-            ticketId,
-            userId,
-            amount: ticket.price
-        });
-        return payment;
-    } catch (err) {
-        return null;
+    if (!tickets || tickets.length !== ticketIds.length) {
+        throw new Error('Some of the tickets were not found.');
     }
+    const alreadyPaid = tickets.filter(ticket => ticket.paymentId);
+    if (alreadyPaid.length > 0) {
+        throw new Error('Some of the tickets have already been paid for.');
+    }
+    const totalAmount = tickets.reduce((sum, ticket) => sum + ticket.price, 0);
+    const payment = await paymentRepository.create({
+        ticketIds,
+        userId,
+        amount: totalAmount,
+        status: 'paid'
+    });
+    await ticketModel.updateMany(
+        { _id: { $in: ticketIds } },
+        { $set: { paymentId: payment._id } }
+    );
+    return payment;
 }
 async function getPayments() {
     try {
