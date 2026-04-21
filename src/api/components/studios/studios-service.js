@@ -10,7 +10,22 @@ async function addStudio(studioData) {
     return(newStudio);
 }
 
+async function getStudio(id) {
+    const studio = await studiosRepository.findById(id);
+    return studio;
+}
+
+async function deleteStudio(i) {
+    const deletedStudio = await studiosRepository.DeleteById(id);
+    if (!deletedStudio) {
+        throw new Error("Studio can't be found or has been deleted");
+    }
+    return deletedStudio;
+}
+
 module.exports = {
     getAllStudios,
-    addStudio
+    addStudio,
+    getStudio,
+    deleteStudio
 }
