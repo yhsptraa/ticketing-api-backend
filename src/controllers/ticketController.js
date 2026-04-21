@@ -1,4 +1,4 @@
-const ticketService = require('../services/ticketService');
+; const ticketService = require('../services/ticketService');
 
 const getAllTickets = async (req, res) => {
   try {
@@ -67,7 +67,6 @@ module.exports = {
   getAllTickets,
   getTicketById,
   createTicket,
-
   updateTicket,
   deleteTicket
 };

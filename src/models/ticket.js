@@ -3,11 +3,13 @@ const mongoose = require("mongoose");
 const ticketSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   },
   price: {
     type: Number,
-    required: true
+    required: true,
+    min: 0
   },
   date: {
     type: Date,
@@ -26,9 +28,17 @@ const ticketSchema = new mongoose.Schema({
     required: true
   },
   studio: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Studio",
     required: true
+  },
+  paymentId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Payment",
+    default: null
   }
-}, { timestamps: true });
+}, { 
+  timestamps: true 
+});
 
 module.exports = mongoose.model("Ticket", ticketSchema);

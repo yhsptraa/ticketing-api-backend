@@ -1,4 +1,5 @@
-const ticketRepository = require('./tickets-repository');
+const ticketRepository = require('../repositories/ticketRepository');
+const paymentRepository = require('../repositories/paymentRepository');
 
 const getAllTickets = async () => {
   return await ticketRepository.getAllTickets();
@@ -13,7 +14,20 @@ const getTicketById = async (id) => {
 };
 
 const createTicket = async (data) => {
-  return await ticketRepository.createTicket(data);
+  // buat ticket
+  const ticket = await ticketRepository.createTicket(data);
+
+  // auto buat payment
+  const payment = await paymentRepository.createPayment({
+    ticket_id: ticket._id,
+    amount: ticket.price,
+    status: "pending"
+  });
+
+  return {
+    ticket,
+    payment
+  };
 };
 
 const updateTicket = async (id, data) => {
