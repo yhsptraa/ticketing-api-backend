@@ -30,7 +30,7 @@ module.exports = {
     create,
     deleteById,
     findAll,
-    findById,
+    findByStudioId,
     findByStatus,
     findByStudioId
 };
