@@ -28,4 +28,5 @@ module.exports = {
     create,
     findById,
     deleteById,
+    findSeatsByStudioId
 };

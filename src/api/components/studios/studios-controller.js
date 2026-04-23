@@ -68,8 +68,8 @@ async function getStudioMovies(req, res) {
     try {
         const studioId = req.params.id;
         const movies = await moviesServices.getByStudio(studioId);
-        res.json({
-            sucess: true,
+        res.status(201).json({
+            success: true,
             data: movies
         });
     } catch (error) {
@@ -80,10 +80,27 @@ async function getStudioMovies(req, res) {
     }
 };
 
+async function getStudioSeats(req, res) {
+    try {
+        const studioId = req.params.id;
+        const seats = await studiosServices.getSeatsByStudio(studioId);
+        res.status(201).json({
+            success: true,
+            data: seats
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: true,
+            message: error.message
+        });
+    }
+};
+
 module.exports = {
     getAllStudios,
     addStudio,
     getStudio,
     deleteStudio,
-    getStudioMovies
+    getStudioMovies,
+    getStudioSeats
 };

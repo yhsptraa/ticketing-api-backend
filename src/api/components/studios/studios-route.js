@@ -11,10 +11,13 @@ router.post('/', studiosController.addStudio);
 // GET /api/studios/:Ld
 router.get('/:id', studiosController.getStudio);
 
-// delete/studio/:id
+// DELETE /api/studios/:id
 router.delete('/:id', studiosController.deleteStudio);
 
-// 
-router.get("/studios/:id/events", studiosController.getStudioMovies)
+// GET /api/studios/:id/movies
+router.get("/:id/movies", studiosController.getStudioMovies);
+
+// GET /api/studios/:id/seats
+router.get("/:id/seats", studiosController.getStudioSeats);
 
 module.exports = router;

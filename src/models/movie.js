@@ -1,18 +1,14 @@
 const mongoose = require('mongoose');
 
 const movieSchema = new mongoose.Schema({
-    movieId: {
-        type: Schema.Types.ObjectId,
-        ref: 'Movie'
-    },
-    StudioId: {
-        type: String,
-        required: true
-    },
     title: {
         type: String,
         required: true,
         index: true
+    },
+    StudioId: {
+        type: String,
+        required: true
     },
     durationMinutes: {
         type: Number,

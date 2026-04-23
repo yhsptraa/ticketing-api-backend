@@ -1,15 +1,11 @@
 const mongoose = require('mongoose');
 
 const studioSchema = new mongoose.Schema({
-    studioId: {
-        type: Schema.Types.ObjectId,
-        ref: 'Studio'
-    },
     name: {
         type: String,
         required: true
     },
-    type: {
+    studioType: {
         type: String,
         enum: [ 'Regular', 'Premiere', 'Imax', '3D' ],
         default: 'Regular'
