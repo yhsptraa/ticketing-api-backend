@@ -1,21 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const moviesController = require('./movies-controller');
+const { authMiddleware, isAdmin } = require('../../../middleware');
 
-// POST /api/movies
-router.post('/', moviesController.addMovie);
+// POST /api/movies (admin only)
+router.post('/', authMiddleware, isAdmin, moviesController.addMovie);
 
-// DELETE /api/studios/:id
-router.delete('/:id', moviesController.deleteMovie);
+// DELETE /api/movies/:id (admin only)
+router.delete('/:id', authMiddleware, isAdmin, moviesController.deleteMovie);
 
 // GET /api/movies
-router.get('/', moviesController.getAllMovies);
+router.get('/', authMiddleware, moviesController.getAllMovies);
 
 // GET /api/movies/:id
-router.get('/:id', moviesController.getMovieById);
+router.get('/:id', authMiddleware, moviesController.getMovieById);
 
-// GET /api/movies/:status
-router.get('/status/:status', moviesController.getMoviesByStatus);
-
+// GET /api/movies/status/:status
+router.get('/status/:status', authMiddleware, moviesController.getMoviesByStatus);
 
 module.exports = router;

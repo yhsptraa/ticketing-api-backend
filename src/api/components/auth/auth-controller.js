@@ -31,7 +31,7 @@ async function register(req, res, next) {
     }
 }
 
-// Register admin user (admin only, max 3 admins)
+// Register admin user (admin only, max 10 admins)
 async function adminRegister(req, res, next) {
     try {
         const { name, email, password, password_confirm } = req.body;
@@ -41,8 +41,8 @@ async function adminRegister(req, res, next) {
         }
 
         const adminCount = await authService.countAdmins();
-        if (adminCount >= 3) {
-            throw errorResponder(errorTypes.VALIDATION, 'Maximum number of admin accounts (3) has been reached');
+        if (adminCount >= 10) {
+            throw errorResponder(errorTypes.VALIDATION, 'Maximum number of admin accounts (10) has been reached');
         }
 
         const emailIsRegistered = await authService.emailIsRegistered(email);
