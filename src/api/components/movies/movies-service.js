@@ -18,8 +18,11 @@ async function getAllMovies() {
   return movies;
 }
 
-async function getMoviesByName(title) {
-  const movie = await moviesRepository.findByTitle(title);
+async function getMovieById(id) {
+  const movie = await moviesRepository.findById(id);
+  if (!movie) {
+    throw new Error("Movie not found");
+  }
   return movie;
 }
 
@@ -29,7 +32,7 @@ async function getMoviesByStatus(status) {
 
   if (!validStatuses.includes(statusLower)) {
     throw new Error(
-      `Status isn't valid, valid status : ${validStatuses.join(", ")}`,
+      ` Status isn't valid, valid status : ${validStatuses.join(", ")} `,
     );
   }
 
@@ -38,14 +41,14 @@ async function getMoviesByStatus(status) {
 }
 
 async function getByStudio(studioId) {
-    return await moviesRepository.findByStudioId(studioId);
+  return await moviesRepository.findByStudioId(studioId);
 };
 
 module.exports = {
   addMovie,
   deleteMovie,
   getAllMovies,
-  getMoviesByName,
+  getMovieById,
   getMoviesByStatus,
   getByStudio
 };

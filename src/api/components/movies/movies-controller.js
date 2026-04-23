@@ -50,18 +50,17 @@ async function getAllMovies(req, res) {
     }
 }
 
-async function getMoviesByName(req, res) {
+async function getMovieById(req, res) {
     try {
-        const { title } = req.params;
-        const movies = await moviesServices.getMoviesByName(title);
+        const { id } = req.params;
+        const movie = await moviesServices.getMovieById(id);
 
         res.status(200).json({
-            sucess: true,
-            count: movies.length,
-            data: movies
+            success: true,
+            data: movie
         });
     } catch (error) {
-        res.status(500).json({
+        res.status(404).json({
             success: false,
             message: error.message
         });
@@ -91,6 +90,6 @@ module.exports = {
     addMovie,
     deleteMovie,
     getAllMovies,
-    getMoviesByName,
+    getMovieById,
     getMoviesByStatus 
 };

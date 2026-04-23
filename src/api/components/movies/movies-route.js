@@ -11,8 +11,8 @@ router.delete('/:id', moviesController.deleteMovie);
 // GET /api/movies
 router.get('/', moviesController.getAllMovies);
 
-// GET /api/movies/:title
-router.get('/title/:title', moviesController.getMoviesByName);
+// GET /api/movies/:id
+router.get('/:id', moviesController.getMovieById);
 
 // GET /api/movies/:status
 router.get('/status/:status', moviesController.getMoviesByStatus);
