@@ -22,10 +22,15 @@ async function findByStatus(status) {
     return await Movie.find({ status: status});
 };
 
+async function findByStudioId(id) {
+    return await Movie.find({ studioId }).populate("movieId")
+};
+
 module.exports = {
     create,
     deleteById,
     findAll,
-    findByTitle,
-    findByStatus
+    findById,
+    findByStatus,
+    findByStudioId
 };

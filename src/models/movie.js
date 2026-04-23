@@ -1,6 +1,14 @@
 const mongoose = require('mongoose');
 
 const movieSchema = new mongoose.Schema({
+    movieId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Movie'
+    },
+    StudioId: {
+        type: String,
+        required: true
+    },
     title: {
         type: String,
         required: true,
@@ -11,14 +19,11 @@ const movieSchema = new mongoose.Schema({
         required: true,
         min: 80
     },
-    releaseDate:{
-        type: Date
-    },
     status: {
         type: String,
         enum: ['ongoing', 'released', 'upcoming'],
         default: 'Ongoing'
-    },
+    }
 },{
     timestamps:true
 });

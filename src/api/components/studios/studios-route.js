@@ -14,4 +14,7 @@ router.get('/:id', studiosController.getStudio);
 // delete/studio/:id
 router.delete('/:id', studiosController.deleteStudio);
 
+// 
+router.get("/studios/:id/events", studiosController.getStudioMovies)
+
 module.exports = router;

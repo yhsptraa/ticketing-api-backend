@@ -37,10 +37,15 @@ async function getMoviesByStatus(status) {
   return movie;
 }
 
+async function getByStudio(studioId) {
+    return await moviesRepository.findByStudioId(studioId);
+};
+
 module.exports = {
   addMovie,
   deleteMovie,
   getAllMovies,
   getMoviesByName,
   getMoviesByStatus,
+  getByStudio
 };

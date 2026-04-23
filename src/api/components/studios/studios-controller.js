@@ -1,4 +1,5 @@
 const studiosServices = require('./studios-service');
+const moviesServices = require('../movies/movies-service');
 
 async function getAllStudios(req, res) {
     try {
@@ -14,7 +15,7 @@ async function getAllStudios(req, res) {
             message: error.message
         });
     }
-}
+};
 
 async function addStudio(req, res) {
     try {
@@ -29,7 +30,7 @@ async function addStudio(req, res) {
             message: error.message
         });
     }
-}
+};
 
 async function getStudio(req, res) {
     try {
@@ -45,7 +46,7 @@ async function getStudio(req, res) {
             message: error.message
         })
     }
-}
+};
 
 async function deleteStudio(req, res) {
     try {
@@ -61,11 +62,28 @@ async function deleteStudio(req, res) {
             message: error.message
         })
     }
-}
+};
+
+async function getStudioMovies(req, res) {
+    try {
+        const studioId = req.params.id;
+        const movies = await moviesServices.getByStudio(studioId);
+        res.json({
+            sucess: true,
+            data: movies
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
 
 module.exports = {
     getAllStudios,
     addStudio,
     getStudio,
-    deleteStudio
+    deleteStudio,
+    getStudioMovies
 };

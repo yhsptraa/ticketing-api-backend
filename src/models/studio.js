@@ -1,25 +1,25 @@
 const mongoose = require('mongoose');
 
 const studioSchema = new mongoose.Schema({
-    "cinema": {
+    studioId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Studio'
+    },
+    name: {
         type: String,
         required: true
     },
-    "name": {
-        type: String,
-        required: true
-    },
-    "type": {
+    type: {
         type: String,
         enum: [ 'Regular', 'Premiere', 'Imax', '3D' ],
         default: 'Regular'
     },
-    "capacity": {
+    capacity: {
         type: Number,
         default: 60,
         min: 30
     },
-    "seatLayout": [{
+    seats: [{
         row: {
             type: String, 
             required: true
