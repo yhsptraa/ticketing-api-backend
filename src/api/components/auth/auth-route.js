@@ -18,6 +18,9 @@ const loginLimiter = rateLimit({
 // POST /api/auth/register
 router.post('/register', authController.register);
 
+// POST /api/auth/admin/register (max 3 admins)
+router.post('/admin/register', authController.adminRegister);
+
 // POST /api/auth/login
 router.post('/login', loginLimiter, authController.login);
 

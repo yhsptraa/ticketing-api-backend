@@ -10,4 +10,8 @@ async function create(data) {
     return user;
 }
 
-module.exports = { findByEmail, create };
+async function countByRole(role) {
+    return await User.countDocuments({ role });
+}
+
+module.exports = { findByEmail, create, countByRole };

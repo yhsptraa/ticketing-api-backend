@@ -22,11 +22,28 @@ async function createUser(name, email, password) {
     }
 }
 
+async function countAdmins() {
+    return await authRepository.countByRole('admin');
+}
+
+async function createUserWithRole(name, email, password, role) {
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const user = await authRepository.create({
+            name,
+            email,
+            password: hashedPassword,
+            role
+        });
+        return user;
+    } catch (err) {
+        return null;
+    }
+}
+
 async function login(email, password) {
     try {
         const user = await authRepository.findByEmail(email);
-
-        // Always run bcrypt even if user not found to prevent timing attacks
         const userPassword = user ? user.password : '<RANDOM_FILLER>';
         const isMatch = await bcrypt.compare(password, userPassword);
 
@@ -54,4 +71,4 @@ async function login(email, password) {
     }
 }
 
-module.exports = { emailIsRegistered, createUser, login };
+module.exports = { emailIsRegistered, createUser, createUserWithRole, countAdmins, login };

@@ -14,10 +14,6 @@ async function findAll() {
     return await Movie.find();
 };
 
-async function findByTitle(title) {
-    return await Movie.find({ title: {$regex: title, $options: 'i'} });
-};
-
 async function findByStatus(status) {
     return await Movie.find({ status: status});
 };

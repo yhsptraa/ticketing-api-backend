@@ -31,6 +31,42 @@ async function register(req, res, next) {
     }
 }
 
+// Register admin user (admin only, max 3 admins)
+async function adminRegister(req, res, next) {
+    try {
+        const { name, email, password, password_confirm } = req.body;
+
+        if (password !== password_confirm) {
+            throw errorResponder(errorTypes.VALIDATION, 'Password confirmation mismatched');
+        }
+
+        const adminCount = await authService.countAdmins();
+        if (adminCount >= 3) {
+            throw errorResponder(errorTypes.VALIDATION, 'Maximum number of admin accounts (3) has been reached');
+        }
+
+        const emailIsRegistered = await authService.emailIsRegistered(email);
+        if (emailIsRegistered) {
+            throw errorResponder(errorTypes.EMAIL_ALREADY_TAKEN, 'Email already registered');
+        }
+
+        const user = await authService.createUserWithRole(name, email, password, 'admin');
+        if (!user) {
+            throw errorResponder(errorTypes.SERVER, 'Failed to create admin');
+        }
+
+        return res.status(201).json({
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            role: user.role
+        });
+
+    } catch (err) {
+        return next(err);
+    }
+}
+
 // Login user
 async function login(req, res, next) {
     try {
@@ -56,4 +92,4 @@ async function login(req, res, next) {
     }
 }
 
-module.exports = { register, login };
+module.exports = { register, adminRegister, login };
