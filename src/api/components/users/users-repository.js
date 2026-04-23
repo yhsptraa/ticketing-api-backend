@@ -12,8 +12,11 @@ async function findAll({ skip = 0, limit = 10 } = {}) {
     return { data, total };
 }
 
-async function updateById(id, data) {
-    return await User.findByIdAndUpdate(id, data, { new: true }).select('-password');
+async function updateById(id, name, email) {
+    return await User.findByIdAndUpdate(id, {
+        name,
+        email
+    }, { new: true }).select('-password');
 }
 
 async function deleteById(id) {

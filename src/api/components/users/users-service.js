@@ -10,8 +10,8 @@ async function getAllUsers({ page = 1, limit = 10 } = {}) {
     return { data, total, page, limit, totalPages: Math.ceil(total / limit) };
 }
 
-async function updateUser(id, data) {
-    return await userRepository.updateById(id, data);
+async function updateUser(id, name, email) {
+    return await userRepository.updateById(id, name, email);
 }
 
 async function deleteUser(id) {

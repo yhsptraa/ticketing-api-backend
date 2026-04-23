@@ -46,7 +46,9 @@ async function getUserById(req, res, next) {
 // Update user berdasarkan ID
 async function updateUser(req, res, next) {
     try {
-        const user = await userService.updateUser(req.params.id, req.body);
+        const userId = req.params.id;
+        const { name, email } = req.body;
+        const user = await userService.updateUser(userId, name, email);
         if (!user) {
             return res.status(404).json({ error: 'User tidak ditemukan' });
         }
