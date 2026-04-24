@@ -3,7 +3,7 @@ const Movie = require('../../../models/movie');
 
 async function create(movieData) {
     const movie = new Movie(movieData);
-    return await movie.save(); 
+    return await movie.save();
 };
 
 async function deleteById(id) {
@@ -15,11 +15,11 @@ async function findAll() {
 };
 
 async function findById(id) {
-    return await Movie.find(id);
+    return await Movie.findById(id);
 };
 
 async function findByStatus(status) {
-    return await Movie.find({ status: status});
+    return await Movie.find({ status: status });
 };
 
 async function findByStudioId(id) {
@@ -31,6 +31,7 @@ module.exports = {
     deleteById,
     findAll,
     findByStudioId,
+    findById,
     findByStatus,
     findByStudioId
 };
