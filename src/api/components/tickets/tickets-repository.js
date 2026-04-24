@@ -1,29 +1,34 @@
 const Ticket = require('../../../models/ticket');
 
-const getAllTickets = () => {
-  return Ticket.find();
+const getAllTickets = async () => {
+  return await Ticket.find();
 };
 
-const getTicketById = (id) => {
-  return Ticket.findById(id);
+const getTicketById = async (id) => {
+  return await Ticket.findById(id);
 };
 
-const createTicket = (data) => {
-  return Ticket.create(data);
+const createTickets = async (data, session) => {
+  return await Ticket.create(data, {session});
 };
 
-const updateTicket = (id, data) => {
-  return Ticket.findByIdAndUpdate(id, data, { new: true });
+const updateTicket = async (id, data) => {
+  return await Ticket.findByIdAndUpdate(id, data, { new: true });
 };
 
-const deleteTicket = (id) => {
-  return Ticket.findByIdAndDelete(id);
+const deleteTicket = async (id) => {
+  return await Ticket.findByIdAndDelete(id);
 };
+
+const findByBookingId = async (bookingId) => {
+  return await Ticket.find({ booking: bookingId });
+}
 
 module.exports = {
   getAllTickets,
   getTicketById,
-  createTicket,
+  createTickets,
   updateTicket,
-  deleteTicket
+  deleteTicket,
+  findByBookingId
 };

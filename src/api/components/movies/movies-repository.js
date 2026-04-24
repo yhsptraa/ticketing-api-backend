@@ -14,6 +14,10 @@ async function findAll() {
     return await Movie.find();
 };
 
+async function findById(id) {
+    return await Movie.find(id);
+};
+
 async function findByStatus(status) {
     return await Movie.find({ status: status});
 };

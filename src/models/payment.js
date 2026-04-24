@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const paymentSchema = new mongoose.Schema({
-    ticketIds: [{
+    booking: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Ticket',
+        ref: 'Booking',
         required: true
-    }],
-    userId: {
+    },
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
@@ -14,6 +14,10 @@ const paymentSchema = new mongoose.Schema({
     amount: {
         type: Number,
         required: true
+    },
+    method: {
+        type: String,
+        default: 'QRIS'
     },
     status: {
         type: String,

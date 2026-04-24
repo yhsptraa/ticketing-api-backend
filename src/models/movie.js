@@ -7,7 +7,8 @@ const movieSchema = new mongoose.Schema({
         index: true
     },
     StudioId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Studio',
         required: true
     },
     durationMinutes: {

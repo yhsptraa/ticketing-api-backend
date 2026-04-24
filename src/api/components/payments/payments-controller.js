@@ -1,5 +1,30 @@
 const paymentService = require('./payments-service');
 
+async function handlePayment(req, res) {
+    try {
+        const { bookingId, paymentMethod, amount, status } = req.body;
+    
+        if(status !== 'paid') {
+            return res.status(200).json({
+                message: 'payment waiting for confirmation'
+            });
+        }
+
+        const result = await paymentService.processPayment(bookingId, paymentMethod, amount);
+
+        return res.status(200).json({
+            success: true,
+            message: 'payment confirm, check your ticket details',
+            data: result
+        });
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            message: error.mesage
+        });
+    }
+}
+
 // membuat pembayaran baru
 async function createPayment(req, res, next) {
     try {
@@ -66,6 +91,7 @@ async function deletePayment(req, res, next) {
     }
 }
 module.exports = {
+    handlePayment,
     createPayment,
     getPayments,
     getPaymentById,

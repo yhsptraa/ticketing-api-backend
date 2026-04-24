@@ -1,22 +1,24 @@
 const mongoose = require("mongoose");
 
 const ticketSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  price: {
-    type: Number,
-    required: true,
-    min: 0
-  },
-  date: {
-    type: Date,
+  booking: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Booking',
     required: true
   },
-  time: {
-    type: String,
+  payment: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Payment',
+    required: true
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    rel: 'User',
+    required: true
+  },
+  showtime: {
+    type: mongoose.Schema.Types.ObjectId,
+    rel: 'Showtime',
     required: true
   },
   seat: {
@@ -27,16 +29,6 @@ const ticketSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  studio: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Studio",
-    required: true
-  },
-  paymentId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Payment",
-    default: null
-  }
 }, { 
   timestamps: true 
 });
